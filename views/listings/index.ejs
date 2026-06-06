@@ -2,94 +2,119 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    #filters{
-        display:flex;
-        flex-wrap:wrap;
-        align-items:center;
+    #filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .filter{
-        text-align:center;
-        margin-right:2rem;
-        opacity:0.7;
+    .filter {
+        text-align: center;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        opacity: 0.65;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.15s, background 0.15s;
+        min-width: 60px;
     }
 
-    .filter:hover{
-        opacity:1;
-        cursor:pointer;
+    .filter:hover {
+        opacity: 1;
+        background: #f5f5f5;
+        color: inherit;
+        text-decoration: none;
     }
 
-    .switch-toggle{
-        border:1px solid black;
-        border-radius:1rem;
-        height:2.5rem;
-        padding:0.4rem;
-        margin-left:5rem;
-        display:flex;
-        align-items:center;
+    .filter.active {
+        opacity: 1;
+        border-bottom: 2px solid black;
+        font-weight: 600;
     }
 
-    .tax-info{
-        display:none;
+    .filter p {
+        margin: 0.25rem 0 0;
+        font-size: 0.75rem;
+    }
+
+    .switch-toggle {
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 2.5rem;
+        padding: 0.4rem;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .tax-info {
+        display: none;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #888;
     }
 </style>
 
 <div id="filters">
 
-    <div class="filter">
+    <a href="/listings" class="filter <%= !currCategory ? 'active' : '' %>">
         <div><i class="fa-solid fa-fire"></i></div>
         <p>Trending</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Room" class="filter <%= currCategory === 'Room' ? 'active' : '' %>">
         <div><i class="fa-solid fa-bed"></i></div>
         <p>Room</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Iconic%20Cities" class="filter <%= currCategory === 'Iconic Cities' ? 'active' : '' %>">
         <div><i class="fa-solid fa-mountain-city"></i></div>
         <p>Iconic Cities</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Mountains" class="filter <%= currCategory === 'Mountains' ? 'active' : '' %>">
         <div><i class="fa-solid fa-mountain"></i></div>
         <p>Mountains</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Castles" class="filter <%= currCategory === 'Castles' ? 'active' : '' %>">
         <div><i class="fa-brands fa-fort-awesome"></i></div>
         <p>Castles</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Pools" class="filter <%= currCategory === 'Pools' ? 'active' : '' %>">
         <div><i class="fa-solid fa-person-swimming"></i></div>
         <p>Pools</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Camping" class="filter <%= currCategory === 'Camping' ? 'active' : '' %>">
         <div><i class="fa-solid fa-campground"></i></div>
         <p>Camping</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Farms" class="filter <%= currCategory === 'Farms' ? 'active' : '' %>">
         <div><i class="fa-solid fa-tractor"></i></div>
         <p>Farms</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Arctic" class="filter <%= currCategory === 'Arctic' ? 'active' : '' %>">
         <div><i class="fa-solid fa-snowflake"></i></div>
         <p>Arctic</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Boat" class="filter <%= currCategory === 'Boat' ? 'active' : '' %>">
         <div><i class="fa-solid fa-ship"></i></div>
         <p>Boat</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Beach" class="filter <%= currCategory === 'Beach' ? 'active' : '' %>">
         <div><i class="fa-solid fa-umbrella-beach"></i></div>
         <p>Beach</p>
-    </div>
+    </a>
 
     <div class="switch-toggle">
         <div class="form-check-reverse form-switch">
@@ -111,6 +136,17 @@
 </div>
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
+    <% if (allListings.length === 0) { %>
+        <div class="no-results col-12">
+            <% if (currSearch) { %>
+                <h5>No listings found for "<%= currSearch %>"</h5>
+            <% } else { %>
+                <h5>No listings found in "<%= currCategory %>"</h5>
+            <% } %>
+            <a href="/listings">View all listings</a>
+        </div>
+    <% } %>
 
     <% for(let listing of allListings){ %>
 

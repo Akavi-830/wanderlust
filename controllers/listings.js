@@ -1,8 +1,27 @@
 const Listing = require("../models/listing");
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
+  const { category, q } = req.query;
+  let filter = {};
+
+  if (category) {
+    filter.category = category;
+  }
+
+  if (q && q.trim() !== "") {
+    filter.$or = [
+      { title: { $regex: q, $options: "i" } },
+      { location: { $regex: q, $options: "i" } },
+      { country: { $regex: q, $options: "i" } },
+    ];
+  }
+
+  const allListings = await Listing.find(filter);
+  res.render("listings/index.ejs", {
+    allListings,
+    currCategory: category || null,
+    currSearch: q || "",
+  });
 };
 module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
