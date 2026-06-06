@@ -134,6 +134,60 @@
     </div>
 
 </div>
+</div>
+
+<div class="mt-3 mb-3">
+
+    <form action="/listings" method="GET">
+
+        <% if(currCategory){ %>
+            <input
+                type="hidden"
+                name="category"
+                value="<%= currCategory %>"
+            >
+        <% } %>
+
+        <% if(currSearch){ %>
+            <input
+                type="hidden"
+                name="q"
+                value="<%= currSearch %>"
+            >
+        <% } %>
+
+        <select
+            name="sort"
+            class="form-select"
+            style="width:250px;"
+            onchange="this.form.submit()"
+        >
+
+            <option value="">
+                Sort By
+            </option>
+
+            <option
+                value="low"
+                <%= currSort === "low" ? "selected" : "" %>
+            >
+                Price: Low to High
+            </option>
+
+            <option
+                value="high"
+                <%= currSort === "high" ? "selected" : "" %>
+            >
+                Price: High to Low
+            </option>
+
+        </select>
+
+    </form>
+
+</div>
+
+
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
 

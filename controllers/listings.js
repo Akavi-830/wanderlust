@@ -1,7 +1,8 @@
 const Listing = require("../models/listing");
 
 module.exports.index = async (req, res) => {
-  const { category, q } = req.query;
+  const { category, q, sort } = req.query;
+
   let filter = {};
 
   if (category) {
@@ -16,11 +17,23 @@ module.exports.index = async (req, res) => {
     ];
   }
 
-  const allListings = await Listing.find(filter);
+  let query = Listing.find(filter);
+
+  if (sort === "low") {
+    query = query.sort({ price: 1 });
+  }
+
+  if (sort === "high") {
+    query = query.sort({ price: -1 });
+  }
+
+  const allListings = await query;
+
   res.render("listings/index.ejs", {
     allListings,
     currCategory: category || null,
     currSearch: q || "",
+    currSort: sort || "",
   });
 };
 module.exports.renderNewForm = (req, res) => {
