@@ -40,7 +40,13 @@
       <div class="mb-3">
         <label for="image" class="form-label"> Upload listing image </label>
 
-        <input name="listing[image]" type="file" class="form-control" />
+        <input
+          type="file"
+          name="listing[images]"
+          class="form-control"
+          multiple
+          required
+        />
         required
       </div>
 

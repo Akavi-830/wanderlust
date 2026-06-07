@@ -1,3 +1,4 @@
+const User = require("../models/user");
 const express = require("express");
 const router = express.Router();
 
@@ -21,7 +22,23 @@ router.get("/", wrapAsync(listingController.index));
 
 // NEW ROUTE
 router.get("/new", isLoggedIn, listingController.renderNewForm);
+router.post(
+  "/:id/wishlist",
+  isLoggedIn,
+  wrapAsync(listingController.addToWishlist),
+);
 
+router.delete(
+  "/:id/wishlist",
+  isLoggedIn,
+  wrapAsync(listingController.removeFromWishlist),
+);
+
+router.get(
+  "/wishlist/all",
+  isLoggedIn,
+  wrapAsync(listingController.showWishlist),
+);
 // SHOW ROUTE
 router.get("/:id", wrapAsync(listingController.showListing));
 
@@ -29,7 +46,7 @@ router.get("/:id", wrapAsync(listingController.showListing));
 router.post(
   "/",
 
-  upload.single("listing[image]"),
+  upload.array("listing[images]", 5),
   validateListing,
   wrapAsync(listingController.createListing),
 );
@@ -51,7 +68,7 @@ router.put(
   "/:id",
   isLoggedIn,
   isOwner,
-  upload.single("listing[image]"),
+  upload.array("listing[images]", 5),
   validateListing,
   wrapAsync(listingController.updateListing),
 );

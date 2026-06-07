@@ -1,0 +1,57 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-4">
+    My Wishlist
+</h2>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+
+<% for(let listing of wishlist){ %>
+
+<div class="col">
+
+<a
+ href="/listings/<%= listing._id %>"
+ class="listing-link"
+>
+
+<div class="card listing-card">
+
+<img
+ src="<%= listing.images[0].url %>"
+ class="card-img-top"
+ style="height:20rem; object-fit:cover;"
+>
+<div class="card-body">
+
+<p class="card-text">
+
+<b>
+<%= listing.title %>
+</b>
+
+<br>
+
+₹ <%= listing.price.toLocaleString("en-IN") %>
+
+</p>
+ <form
+ action="/listings/<%= listing._id %>/wishlist?_method=DELETE"
+ method="POST"
+>
+ <button class="btn btn-danger btn-sm">
+   Remove from Wishlist
+ </button>
+</form>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+<% } %>
+
+</div>

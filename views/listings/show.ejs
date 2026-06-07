@@ -1,20 +1,98 @@
 
 <% layout("/layouts/boilerplate") %>
 
+
 <div class="row">
 
   <div class="col-8 offset-2">
 
     <h3><%= listing.title %></h3>
+      <% if(currUser){ %>
+
+<form
+  method="POST"
+  action="/listings/<%= listing._id %>/wishlist"
+  class="mb-3"
+>
+  <button class="btn btn-danger">
+    ❤️ Save to Wishlist
+  </button>
+</form>
+
+<% } %>
 
     <div class="card listing-card">
+     
+      
 
-      <img
-        src="<%= listing.image.url %>"
-        class="card-img-top show-img"
-        alt="listing_image"
-      />
+<% if(listing.images && listing.images.length > 0){ %>
 
+<div id="listingCarousel" class="carousel slide">
+
+  <div class="carousel-inner">
+
+    <% listing.images.forEach((image,index)=>{ %>
+
+      <div class="carousel-item <%= index===0 ? 'active' : '' %>">
+
+        <img
+          src="<%= image.url %>"
+          class="d-block w-100 show-img"
+          alt="listing_image"
+          style="height:400px; object-fit:cover;border-radius: 20px;"
+        >
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#listingCarousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#listingCarousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon"></span>
+  </button>
+
+</div>
+
+<% } else { %>
+
+<img
+  src="<%= listing.image.url %>"
+  class="card-img-top show-img"
+  alt="listing_image"
+  style="height:400px; object-fit:cover; "
+  
+>
+
+<% } %>
+    
+
+  
+
+  
+
+  
+
+</div>
+
+  
+
+    
+  
       <div class="card-body">
 
         <p class="card-text">
@@ -49,32 +127,39 @@
 
     <% if(currUser && listing.owner._id.equals(currUser._id)){ %>
 
-      <a
-        href="/listings/<%= listing._id %>/edit"
-        class="btn btn-dark edit-btn"
-      >
-        Edit
-      </a>
+     <div class="d-flex gap-2 mt-3 "
+       style="margin-left: 13.5rem"; 
+       >
 
-      <form
-        method="POST"
-        action="/listings/<%= listing._id %>?_method=DELETE"
-        class="d-inline"
-      >
-        <button class="btn btn-dark ms-2">
-          Delete
-        </button>
-      </form>
+  <a
+    href="/listings/<%= listing._id %>/edit"
+    class="btn btn-warning"
+  >
+    Edit
+  </a>
+
+  <form
+    method="POST"
+    action="/listings/<%= listing._id %>?_method=DELETE"
+  >
+    <button class="btn btn-danger">
+      Delete
+    </button>
+  </form>
+
+</div>
 
     <% } %>
 
   </div>
 
 </div>
+  
 
 <div class="row mt-4">
 
-  <div class="col-8 offset-2">
+  <div class="col-7 offset-2 "
+   style = "margin-left: 21rem;">
 
     
 
@@ -106,8 +191,8 @@
         <input type="radio" id="first-rate5" name="review[rating]" value="5" />
         <label for="first-rate5" title="Amazing">5 stars</label>
         </fieldset>
-        </div>
-        <hr>
+        </div> <hr>
+        
         <div class="mb-3">
 
           <label for="comment" class="form-label">
