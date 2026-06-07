@@ -36,3 +36,18 @@ module.exports.logout = (req, res, next) => {
     res.redirect("/listings");
   });
 };
+
+const Listing = require("../models/listing");
+
+module.exports.showProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  const myListings = await Listing.find({
+    owner: req.user._id,
+  });
+
+  res.render("users/profile.ejs", {
+    user,
+    myListings,
+  });
+};

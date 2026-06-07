@@ -17,8 +17,16 @@
 
 <div class="card listing-card">
 
+   <% let imageUrl = ""; %>
+
+<% if(listing.images && listing.images.length > 0){ %>
+    <% imageUrl = listing.images[0].url; %>
+<% } else if(listing.image){ %>
+    <% imageUrl = listing.image.url; %>
+<% } %>
+
 <img
- src="<%= listing.images[0].url %>"
+ src="<%= imageUrl %>"
  class="card-img-top"
  style="height:20rem; object-fit:cover;"
 >
