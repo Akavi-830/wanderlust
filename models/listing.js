@@ -1,3 +1,4 @@
+const Booking = require("./booking");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -68,6 +69,12 @@ const listingSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  bookings: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
 });
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {

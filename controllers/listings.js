@@ -1,6 +1,7 @@
 const axios = require("axios");
 const User = require("../models/user");
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 
 module.exports.index = async (req, res) => {
   const { category, q, sort } = req.query;
@@ -179,4 +180,42 @@ module.exports.addToWishlist = async (req, res) => {
   }
 
   res.redirect(`/listings/${id}`);
+};
+module.exports.bookListing = async (req, res) => {
+  const { id } = req.params;
+
+  const listing = await Listing.findById(id);
+
+  const { checkIn, checkOut, guests } = req.body;
+
+  const days = Math.ceil(
+    (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24),
+  );
+
+  if (days <= 0) {
+    req.flash("error", "Check-out must be after check-in");
+
+    return res.redirect(`/listings/${id}`);
+  }
+
+  const totalPrice = days * listing.price;
+
+  const booking = new Booking({
+    listing: id,
+    user: req.user._id,
+    checkIn,
+    checkOut,
+    guests,
+    totalPrice,
+  });
+
+  await booking.save();
+
+  listing.bookings.push(booking._id);
+
+  await listing.save();
+
+  req.flash("success", "Booking Successful!");
+
+  res.redirect("/profile");
 };

@@ -55,6 +55,16 @@
    border: none !important; 
    margin-bottom: 2rem;
  }
+ .listing-card:hover{
+   transform: translateY(-5px);
+}
+.listing-card{
+   transition: all 0.3s ease;
+}
+
+.listing-card:hover{
+   transform: translateY(-8px);
+}
  .card-img-top{
   border-radius: 1rem !important;
   width: 100% !important;
@@ -82,10 +92,31 @@
     background-color: #fe424d !important;
     border:none !important;
  }
+ .btn-success,
+.btn-danger,
+.btn-warning{
+   border-radius:12px;
+}
+.btn{
+   transition: all 0.3s ease;
+}
+
+.btn:hover{
+   transform: translateY(-2px);
+}
   /* show page */
   .show-img{
-    height:40vh;
+  height:40vh;
+  object-fit:cover;
+}
+
+@media (max-width:768px){
+
+  .show-img{
+      height:250px;
   }
+
+}
   .profile-card{
     max-width: 800px;
     margin: auto;
@@ -98,4 +129,102 @@
     transform: translateY(-10px) scale(1.01);
     box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
 }
-  
+.booking-card{
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+@media(max-width:768px){
+
+    .booking-card{
+        margin-bottom:1rem;
+    }
+
+}
+
+
+/* Responsive Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile Container Padding */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    padding: 0.75rem;
+  }
+}
+
+/* Cards */
+@media (max-width: 768px) {
+  .listing-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Show Page */
+@media (max-width: 768px) {
+  .show-img {
+    height: 250px;
+  }
+}
+
+/* Profile Card */
+@media (max-width: 768px) {
+  .profile-card {
+    margin: 1rem;
+  }
+}
+  .listing-map{
+  height:400px;
+  border-radius:20px;
+  border:1px solid #ddd;
+}
+
+@media(max-width:768px){
+
+  .listing-map{
+      height:250px;
+  }
+
+}
+.profile-avatar{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background-color:#fe424d;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:2rem;
+    font-weight:bold;
+
+    margin:auto;
+}
+
+@media(max-width:768px){
+
+    .profile-avatar{
+        width:80px;
+        height:80px;
+        font-size:1.5rem;
+    }
+
+}

@@ -1,3 +1,4 @@
+const Booking = require("../models/booking");
 const User = require("../models/user");
 module.exports.renderSignupForm = (req, res) => {
   res.render("users/signup.ejs");
@@ -46,8 +47,13 @@ module.exports.showProfile = async (req, res) => {
     owner: req.user._id,
   });
 
+  const myBookings = await Booking.find({
+    user: req.user._id,
+  }).populate("listing");
+
   res.render("users/profile.ejs", {
     user,
     myListings,
+    myBookings,
   });
 };

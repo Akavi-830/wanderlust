@@ -41,6 +41,7 @@ router.get(
 );
 // SHOW ROUTE
 router.get("/:id", wrapAsync(listingController.showListing));
+router.post("/:id/book", isLoggedIn, wrapAsync(listingController.bookListing));
 
 // CREATE ROUTE
 router.post(

@@ -87,7 +87,7 @@
       <div class="mb-3">
         <label for="category" class="form-label"> Category </label>
         <select name="listing[category]" class="form-select">
-          <% const categories = ["Trending","Room","Iconic Cities","Mountains","Castles","Pools","Camping","Farms","Arctic","Boat","Beach"]; %>
+          <% const categories = ["Trending","Room","Iconic Cities","Mountains","Castles","Pools","Camping","Farms","Arctic","Cruise","Beach"]; %>
           <% for(let cat of categories){ %>
             <option value="<%= cat %>" <%= listing.category === cat ? 'selected' : '' %>>
               <%= cat %>
